@@ -11,8 +11,24 @@ const template = require('./template');
 const params = argv._;
 const exec = require('child_process').exec;
 // check if react project
+
 if(params[0] === 'new') {
     createNewProject(params[1]);
+    return;
+}
+if(params[0] === 'serve') {
+    
+    if(projectNotFound()) {
+        console.log(params[0])
+        return;
+    } 
+    serveProject();
+    return;
+}
+if(params[0] === 'build') {
+    if(projectNotFound()) 
+        return;
+    build(params[1]);
     return;
 }
 // if(!fs.existsSync(path.join(process.cwd(), 'src', 'index.js'))) {
@@ -59,13 +75,15 @@ else if (params && params.length === 0 ) {
         console.log(chalk.green("page (p) create component"));
         console.log(chalk.green("component (c) create component"));
         console.log(chalk.green("service (s) create service"));
+        console.log(chalk.green("serve serve's project"));
+        console.log(chalk.green("build build's project"));
         return;
     })
     
 }
 else {
-    if(!readPckIfExist() || !readPckIfExist().dependencies.react){
-        return console.log("react project not found");
+    if(projectNotFound()) {
+        return;
     }
     let type = params[0];
     if(type === 'c' || type === 'component') {
@@ -91,7 +109,7 @@ else {
         const mainjs = File+ '.'+type+'.js';
         const maincss = File+ '.' + type + '.css';
         const modulecss = File + '.' + 'module.css';
-        const testjs = File + '.' + type + '.spec.js'
+        const testjs = File + '.' + type + '.test.js'
         if((type === 'page' || type === 'component') && argv.m) {
             fileCreateOperation(type, {'mainjs': mainjs, 'modulecss': modulecss, 'testjs': testjs});
         }
@@ -106,6 +124,16 @@ else {
 async function createNewProject(appName) {
     console.log("Installing React app...");
     exec(`npx create-react-app ${appName}`).stdout.pipe(process.stdout);
+}
+
+async function serveProject() {
+    console.log('serving project...');
+    exec(`npm  start`).stdout.pipe(process.stdout);
+}
+
+async function build() {
+    console.log('building project...');
+    exec(`npm run build`).stdout.pipe(process.stdout);
 }
 
 async function fileCreateOperation(type, filesConfig) {
@@ -133,4 +161,14 @@ async function fileCreateOperation(type, filesConfig) {
         }  
     }
     console.log(chalk.green(`${type} created successfull`));
+}
+
+function projectNotFound() {
+    console.log(readPckIfExist().dependencies.react)
+    if(!readPckIfExist() || !readPckIfExist().dependencies.react){
+         console.log("react project not found");
+         return true;
+    } else {
+        return false;
+    }
 }
