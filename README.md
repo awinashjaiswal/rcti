@@ -3,15 +3,15 @@ Interactive CLI for react
 ```jaascript
 npm install -g rcti
 ```
-## create new Project
+### create new Project
 ```javascript
 rcti new <project-name> 
 ```
-## create component
+### create component
 ```javascript
 rcti c <path(optional)/component-name>
 ```
-## create  page
+### create  page
 ```javascript
 rcti p <path(optional)/page-name>
 ```
