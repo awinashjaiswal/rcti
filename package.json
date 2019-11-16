@@ -1,6 +1,6 @@
 {
   "name": "rcti",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "react cli",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,15 @@
     "type" : "git",
     "url" : "https://github.com/awinashjaiswal/rcti"
   },
+  "keywords": [
+    "react",
+    "cli",
+    "react_cli",
+    "react-cli",
+    "react$",
+    "rcti",
+    "interactive"
+  ],
   "bin": {
     "rcti": "index.js"
   }
