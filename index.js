@@ -142,16 +142,28 @@ async function fileCreateOperation(type, filesConfig) {
     for(i in filesToCreate) {
         if(!fs.existsSync(filesToCreate[i])) {
                 if(i === 'mainjs') {
+                    // gets the name of css file
                     css = filesToCreate['maincss'] ? filesToCreate['maincss'].split('\\').slice(-1)[0] : filesToCreate['modulecss'].split('\\').slice(-1)[0];
+                    // get class name for component
                     className = css.split('.')[0];
+                    // component Name
+                    compName = filesToCreate['mainjs'].split('\\').slice(-1)[0]
+                    // get type of css Modular/normal
                     cssType = filesToCreate['maincss'] ? 'maincss' : 'modulecss'
                     try {
-                        fs.writeFileSync(filesToCreate[i], template.template(cssType, css, className))
+                        fs.writeFileSync(filesToCreate[i], template.template(compName, css, className))
                     } catch(err) {
                         console.log(err)
                     }
                     
-                } else {    
+                } else if(i === 'testjs') {
+                    try {
+                        fs.writeFileSync(filesToCreate[i], template.testTemplate(compName,className))
+                    } catch(err) {
+                        console.log(err)
+                    }
+                }
+                 else {    
                     touch(filesToCreate[i])
                 }
         }
@@ -164,7 +176,6 @@ async function fileCreateOperation(type, filesConfig) {
 }
 
 function projectNotFound() {
-    console.log(readPckIfExist().dependencies.react)
     if(!readPckIfExist() || !readPckIfExist().dependencies.react){
          console.log("react project not found");
          return true;
