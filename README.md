@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/eacc7213eda044c09aca3971b81133e6)](https://www.codacy.com/manual/awinashjaiswal/rcti?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=awinashjaiswal/rcti&amp;utm_campaign=Badge_Grade)
 # rcti
 Interactive CLI for react 
 ```jaascript
